@@ -157,14 +157,7 @@ export default function TodoApp() {
               </span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              {/* Theme toggle */}
-              <button onClick={toggleTheme} title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`} style={{
-                background: "none", border: "1px solid var(--frost)", borderRadius: 2,
-                cursor: "pointer", padding: "4px 8px", fontSize: 14,
-                color: "var(--acid)", transition: "all 0.15s",
-              }}>
-                {theme === "dark" ? "☀" : "☾"}
-              </button>
+ 
               <span style={{ fontFamily: "var(--font-mono), monospace", fontSize: 12, fontWeight: 700, color: "var(--acid)", letterSpacing: "0.1em" }}>
                 {dateStr} <span style={{ color: "var(--ash)", margin: "0 4px" }}>/</span> {timeStr}
               </span>
@@ -323,6 +316,7 @@ export default function TodoApp() {
           stats={stats}
           velocity={velocity}
           theme={theme}
+          toggleTheme={toggleTheme}
           user={{ name: session?.user?.name ?? "", email: session?.user?.email ?? "", image: session?.user?.image ?? null }}
           onClose={() => setShowDrawer(false)}
         />
@@ -333,11 +327,12 @@ export default function TodoApp() {
 
 /* ── Inline Profile Drawer ── */
 function ProfileDrawer({
-  stats, velocity, theme, user, onClose,
+  stats, velocity, theme, toggleTheme, user, onClose,
 }: {
   stats: { total: number; done: number; active: number; overdue: number };
   velocity: number;
   theme: string;
+  toggleTheme: () => void;
   user:  { name: string; email: string; image: string | null };
   onClose: () => void;
 }) {
@@ -405,6 +400,25 @@ function ProfileDrawer({
           </div>
 
           <div style={{ height: 1, background: "var(--frost)", marginBottom: 24 }} />
+
+          {/* Theme Settings */}
+          <div style={{ background: "var(--glass)", border: "1px solid var(--frost)", borderRadius: 2, padding: "12px 14px", marginBottom: 24, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div style={{ fontFamily: "var(--font-mono), monospace", fontSize: 10, color: "var(--acid)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em" }}>INTERFACE THEME</div>
+            <button
+              onClick={toggleTheme}
+              style={{
+                display: "flex", alignItems: "center", gap: 8,
+                background: "var(--surface)", border: "1px solid var(--frost)", borderRadius: 2,
+                cursor: "pointer", padding: "6px 12px", fontSize: 10,
+                color: "var(--text-primary)", fontFamily: "var(--font-mono), monospace", textTransform: "uppercase",
+                transition: "all 0.15s",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = "var(--acid)"; e.currentTarget.style.color = "var(--acid)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--frost)"; e.currentTarget.style.color = "var(--text-primary)"; }}
+            >
+              {theme === "dark" ? "☀ LIGHT MODE" : "☾ DARK MODE"}
+            </button>
+          </div>
 
           {/* Calendar note */}
           <div style={{ background: "var(--glass)", border: "1px solid var(--frost)", borderRadius: 2, padding: "12px 14px", marginBottom: 24 }}>
