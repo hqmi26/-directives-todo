@@ -42,11 +42,35 @@ export const authOptions: NextAuthOptions = {
     },
   },
 
+  cookies: {
+    sessionToken: {
+      name: process.env.NODE_ENV === "production" ? "__Secure-next-auth.session-token" : "next-auth.session-token",
+      options: { httpOnly: true, sameSite: "none", path: "/", secure: true },
+    },
+    callbackUrl: {
+      name: process.env.NODE_ENV === "production" ? "__Secure-next-auth.callback-url" : "next-auth.callback-url",
+      options: { sameSite: "none", path: "/", secure: true },
+    },
+    csrfToken: {
+      name: process.env.NODE_ENV === "production" ? "__Host-next-auth.csrf-token" : "next-auth.csrf-token",
+      options: { httpOnly: true, sameSite: "none", path: "/", secure: true },
+    },
+    pkceCodeVerifier: {
+      name: process.env.NODE_ENV === "production" ? "__Secure-next-auth.pkce.code_verifier" : "next-auth.pkce.code_verifier",
+      options: { httpOnly: true, sameSite: "none", path: "/", secure: true },
+    },
+    state: {
+      name: process.env.NODE_ENV === "production" ? "__Secure-next-auth.state" : "next-auth.state",
+      options: { httpOnly: true, sameSite: "none", path: "/", secure: true },
+    },
+  },
+
   pages: {
     signIn:  "/login",
     error:   "/login",
   },
 };
+
 
 // Augment next-auth types so session.user.id is available
 declare module "next-auth" {
