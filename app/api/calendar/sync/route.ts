@@ -4,6 +4,8 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { createCalendarEvent, deleteCalendarEvent } from "@/lib/google-calendar";
 
+export const dynamic = "force-dynamic";
+
 // POST — sync a task to Google Calendar
 export async function POST(req: NextRequest) {
     const session = await getServerSession(authOptions);

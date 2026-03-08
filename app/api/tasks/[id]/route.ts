@@ -5,6 +5,8 @@ import { updateTask, deleteTask } from "@/lib/tasks";
 import { prisma } from "@/lib/prisma";
 import { updateCalendarEvent, deleteCalendarEvent } from "@/lib/google-calendar";
 
+export const dynamic = "force-dynamic";
+
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
