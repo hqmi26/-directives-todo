@@ -1,8 +1,9 @@
 "use client";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function LoginPage() {
+function LoginContent() {
   const params = useSearchParams();
   const error  = params.get("error");
 
@@ -85,5 +86,15 @@ export default function LoginPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div style={{ minHeight: "100vh", background: "var(--void)" }} />
+    }>
+      <LoginContent />
+    </Suspense>
   );
 }

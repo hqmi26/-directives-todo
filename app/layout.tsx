@@ -23,9 +23,7 @@ export const metadata: Metadata = {
   description: "Glass Brutalism Command Center — Task Manager",
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const session = await getServerSession(authOptions);
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`dark ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
       <head>
@@ -36,7 +34,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="apple-touch-icon" href="/icons/icon-192.png" />
       </head>
       <body>
-        <SessionProvider session={session}>
+        <SessionProvider>
           <ThemeProvider>
             {children}
           </ThemeProvider>
